@@ -10,7 +10,6 @@ type JsonLogLineParser struct {
 	FileGlob string
 }
 
-
 func (h *JsonLogLineParser) Process(start, end time.Time) ([]LogLine, error) {
 
 	// storage for output
@@ -42,9 +41,7 @@ type jsonLogLine struct {
 	Ts string `json:"ts"`
 }
 
-
-
-func (h *JsonLogLineParser)parseFile(filename string) ([]LogLine, error) {
+func (h *JsonLogLineParser) parseFile(filename string) ([]LogLine, error) {
 	// create the empty container
 	logLines := make([]LogLine, 0)
 
@@ -53,7 +50,7 @@ func (h *JsonLogLineParser)parseFile(filename string) ([]LogLine, error) {
 		var jsonLine jsonLogLine
 
 		// parse json
-		if err := json.Unmarshal([]byte(lineText), &jsonLine ); err != nil {
+		if err := json.Unmarshal([]byte(lineText), &jsonLine); err != nil {
 			return fmt.Errorf("while attempting to parse json line '%v': %v", lineText, err)
 		}
 

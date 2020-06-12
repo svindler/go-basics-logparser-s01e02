@@ -19,14 +19,11 @@ func main() {
 
 	flag.Parse()
 
-
 	// Check here because I'm paranoid and these are user supplied pointers that will be dereferenced
 	if startStringRef == nil || endStringRef == nil {
 		fmt.Println("Missing start and / or end time")
 		os.Exit(-1)
 	}
-
-
 
 	parser := logparser.CombinedParser{
 		Parsers: []logparser.LogFileParser{
@@ -56,7 +53,7 @@ func main() {
 	}
 
 	for _, line := range logLines {
-			fmt.Println(line)
+		fmt.Println(line)
 	}
 
 }

@@ -57,7 +57,6 @@ func filterLogLines(start, end time.Time, logLines []LogLine) []LogLine {
 	return logLinesMatched
 }
 
-
 // Execute `fn(line)` for each of the lines in the file
 func forEachLineOfFile(filename string, fn func(line string) error) error {
 
@@ -92,6 +91,3 @@ func forEachLineOfFile(filename string, fn func(line string) error) error {
 func checkIfTimeInBetween(start, end, eventTime time.Time) bool {
 	return eventTime.After(start) && eventTime.Before(end)
 }
-
-
-

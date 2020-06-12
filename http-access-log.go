@@ -26,9 +26,6 @@ func ParseHttpLine(line string) (time.Time, error) {
 	return parsedTime, nil
 }
 
-
-
-
 type HttpAccessLineParser struct {
 	FileGlob string
 }
@@ -55,7 +52,6 @@ func (h *HttpAccessLineParser) parseFile(filename string) ([]LogLine, error) {
 
 	return logLines, err
 }
-
 
 func (h *HttpAccessLineParser) Process(start, end time.Time) ([]LogLine, error) {
 
