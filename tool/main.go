@@ -15,11 +15,12 @@ type jsonLogLine struct {
 func main() {
 
 	startStringRef := flag.String("start", "2020-06-11T13:48:00.000", "The start time to look for in logs")
-	endStringRef := flag.String("end", "2020-06-19T13:48:00.000", "The end time to look for in logs")
+	endStringRef := flag.String("end", "2020-06-11T13:59:00.000", "The end time to look for in logs")
 
 	flag.Parse()
 
 
+	// Check here because I'm paranoid and these are user supplied pointers that will be dereferenced
 	if startStringRef == nil || endStringRef == nil {
 		fmt.Println("Missing start and / or end time")
 		os.Exit(-1)
@@ -55,10 +56,7 @@ func main() {
 	}
 
 	for _, line := range logLines {
-
-		if logparser.CheckIfTimeInBetween(start, end, line.TimeStamp) {
 			fmt.Println(line)
-		}
 	}
 
 }
