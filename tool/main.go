@@ -16,7 +16,7 @@ import (
 func main() {
 	fmt.Println("Starting parser")
 
-	startStringRef := flag.String("start", "2020-06-10T13:43:00.000", "The start time to look for in logs")
+	startStringRef := flag.String("start", "2020-06-10T13:40:00.000", "The start time to look for in logs")
 	endStringRef := flag.String("end", "2020-06-10T14:59:00.000", "The end time to look for in logs")
 
 	flag.Parse()
@@ -29,6 +29,8 @@ func main() {
 
 	parser := logparser.CombinedParser{
 		Parsers: []logparser.LogFileParser{
+			&logparser.ControlLicenseServiceLogLineParser{"/Users/svr/Dev/TableauLogs/licenseservice/control_licenseservice_node1-0.log"},
+			&logparser.ControlLicenseServiceLogLineParser{"/Users/svr/Dev/TableauLogs/licenseservice/control_licenseservice_node1-0.log.*"},
 			&logparser.HttpdErrorLineParser{"/Users/svr/Dev/TableauLogs/httpd/error.log"},
 			&logparser.HttpAccessLineParser{"/Users/svr/Dev/TableauLogs/httpd/access.*.log"},
 			&logparser.JsonLogLineParser{"/Users/svr/Dev/TableauLogs/vizqlserver/nativeapi_vizqlserver*.txt"},
