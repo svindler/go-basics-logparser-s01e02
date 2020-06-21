@@ -8,14 +8,16 @@ import (
 	"time"
 )
 
-type jsonLogLine struct {
+/* type jsonLogLine struct {
 	Ts string `json:"ts"`
 }
+*/
 
 func main() {
+	fmt.Println("Starting parser")
 
-	startStringRef := flag.String("start", "2020-06-11T13:48:00.000", "The start time to look for in logs")
-	endStringRef := flag.String("end", "2020-06-11T13:59:00.000", "The end time to look for in logs")
+	startStringRef := flag.String("start", "2020-06-10T13:43:00.000", "The start time to look for in logs")
+	endStringRef := flag.String("end", "2020-06-10T14:59:00.000", "The end time to look for in logs")
 
 	flag.Parse()
 
@@ -27,20 +29,21 @@ func main() {
 
 	parser := logparser.CombinedParser{
 		Parsers: []logparser.LogFileParser{
-			&logparser.HttpAccessLineParser{"/Users/gyulalaszlo/Documents/TableauLogs/logs/httpd/access.*.log"},
-			&logparser.JsonLogLineParser{"/Users/gyulalaszlo/Documents/TableauLogs/logs/vizqlserver/nativeapi_vizqlserver*.txt"},
+			&logparser.HttpdErrorLineParser{"/Users/svr/Dev/TableauLogs/httpd/error.log"},
+			&logparser.HttpAccessLineParser{"/Users/svr/Dev/TableauLogs/httpd/access.*.log"},
+			&logparser.JsonLogLineParser{"/Users/svr/Dev/TableauLogs/vizqlserver/nativeapi_vizqlserver*.txt"},
 		},
 	}
 
 	// Check times validity
-	//start, err := time.Parse("2006-01-02T15:04:05", "2020-06-11T13:48:00.000")
+	// start, err := time.Parse("2006-01-02T15:04:05", "2020-06-11T13:48:00.000")
 	start, err := time.Parse("2006-01-02T15:04:05", *startStringRef)
 	if err != nil {
 		fmt.Println("Malformed start time:", err)
 		os.Exit(-1)
 	}
 
-	end, err := time.Parse("2006-01-02T15:04:05", *endStringRef)
+	end, err := time.Parse("2006-01-02T15:05:05", *endStringRef)
 	if err != nil {
 		fmt.Println("Malformed end time:", err)
 		os.Exit(-1)
