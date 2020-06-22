@@ -8,22 +8,18 @@ import (
 	"time"
 )
 
-/* type jsonLogLine struct {
-	Ts string `json:"ts"`
-}
-*/
-
 func main() {
 	fmt.Println("Starting parser")
 
 	startStringRef := flag.String("start", "2020-06-10T13:40:00.000", "The start time to look for in logs")
-	endStringRef := flag.String("end", "2020-06-10T14:59:00.000", "The end time to look for in logs")
+	durationStringRef := flag.String("duration", "10s", "The length  of the period")
+	// endStringRef := flag.String("end", "2020-06-10T14:59:00.000", "The end time to look for in logs")
 
 	flag.Parse()
 
 	// Check here because I'm paranoid and these are user supplied pointers that will be dereferenced
-	if startStringRef == nil || endStringRef == nil {
-		fmt.Println("Missing start and / or end time")
+	if startStringRef == nil || durationStringRef == nil {
+		fmt.Println("Missing start time and / or duration")
 		os.Exit(-1)
 	}
 
@@ -45,7 +41,11 @@ func main() {
 		os.Exit(-1)
 	}
 
-	end, err := time.Parse("2006-01-02T15:05:05", *endStringRef)
+	end, err := logparser.ParseDuration(*startStringRef, *durationStringRef)
+
+	fmt.Println(start, end)
+
+	// end, err := time.Parse("2006-01-02T15:05:05", *endStringRef)
 	if err != nil {
 		fmt.Println("Malformed end time:", err)
 		os.Exit(-1)
